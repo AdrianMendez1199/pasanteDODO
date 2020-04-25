@@ -1,8 +1,13 @@
-import express from 'express';
+import {GraphQLServer} from 'graphql-yoga';
 
-const app = express();
+import {types as typeDefs, resolvers} from './src/graphql'
 
 
-app.listen( 3000, () => {
-    console.log('Server listen on 3000');
+const server = new GraphQLServer({
+    typeDefs,
+    resolvers
+});
+
+server.start(() => {
+console.log('Server Runing on http://localhost:4000')
 })

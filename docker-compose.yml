@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  pasantes-do:
+    volumes:
+     - .:/usr/src/app
+    #  - node_modules:/usr/src/app/node_modules
+    build: .
+    container_name: pasantes_v1
+    image: pasantes/pasantes_v1
+    depends_on:
+      - postgres
+    ports:
+      - "4000:4000"
+      - "5432:5432"
+
+  postgres:
+    image: postgres:11.2-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
