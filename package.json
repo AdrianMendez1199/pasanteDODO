@@ -8,9 +8,10 @@
     "lint": "eslint . --ext .ts",
     "remove": "rm -rf dist",
     "build": "tsc",
-    "server": "node ./dist/index.js",
-    "ts": "ts-node index.ts",
-    "dev": "nodemon"
+    "server": "node ./dist/src/index.js",
+    "ts": "ts-node ./src/index.ts",
+    "dev": "nodemon",
+    "user-t" : "cp ./src/graphql/User/schema.graphql ./dist/src/graphql/User"
   },
   "dependencies": {
     "graphql-yoga": "^1.18.3",

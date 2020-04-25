@@ -1,9 +1,10 @@
 version: "3.7"
 services:
   pasantes-do:
+    networks:
+     - app-network
     volumes:
      - .:/usr/src/app
-    #  - node_modules:/usr/src/app/node_modules
     build: .
     container_name: pasantes_v1
     image: pasantes/pasantes_v1
@@ -12,8 +13,25 @@ services:
     ports:
       - "4000:4000"
       - "5432:5432"
-
+  
   postgres:
     image: postgres:11.2-alpine
     environment:
       POSTGRES_PASSWORD: postgres
+
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+    depends_on:
+      - pasantes-do
+    ports: 
+      - "80:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

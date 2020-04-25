@@ -4,11 +4,15 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN yarn install
+USER node
+
+RUN rm -rf node_modules
+RUN rm -rf dist 
 
 COPY . .
+COPY --chown=node:node . .
 
-RUN yarn build
+RUN yarn add \
+ yarn build
 
-
-CMD [ "yarn", "server" ]
+CMD ["yarn", "dev"]

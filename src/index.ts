@@ -1,6 +1,6 @@
 import {GraphQLServer} from 'graphql-yoga';
 
-import {types as typeDefs, resolvers} from './src/graphql'
+import {types as typeDefs, resolvers} from './graphql'
 
 
 const server = new GraphQLServer({
@@ -9,5 +9,5 @@ const server = new GraphQLServer({
 });
 
 server.start(() => {
-console.log('Server Runing on http://localhost:4000')
+ console.log('Server Runing on http://localhost:4000')
 })
