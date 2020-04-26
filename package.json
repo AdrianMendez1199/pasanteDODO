@@ -11,9 +11,10 @@
     "server": "node ./dist/src/index.js",
     "ts": "ts-node ./src/index.ts",
     "dev": "nodemon",
-    "user-t" : "cp ./src/graphql/User/schema.graphql ./dist/src/graphql/User"
+    "user-t": "cp ./src/graphql/User/schema.graphql ./dist/src/graphql/User"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "graphql-yoga": "^1.18.3",
     "merge-graphql-schemas": "^1.7.8"
   },
