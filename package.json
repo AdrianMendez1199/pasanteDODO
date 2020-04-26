@@ -10,7 +10,7 @@
     "build": "tsc",
     "server": "node ./dist/src/index.js",
     "ts": "ts-node ./src/index.ts",
-    "dev": "nodemon",
+    "dev": "NODE_ENV=development nodemon",
     "user-t": "cp ./src/graphql/User/schema.graphql ./dist/src/graphql/User"
   },
   "dependencies": {

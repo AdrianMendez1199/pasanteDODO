@@ -16,8 +16,6 @@ const server = new GraphQLServer({
     resolvers
 });
 
-server.start(options, ({ port }) =>
-  console.log(
-    `Server started, listening on port ${port} for incoming requests.`,
-  ),
+server.start(options, ({ port, playground }) =>
+  console.log(`Server runing http://localhost:${port}${playground}`)
 )
