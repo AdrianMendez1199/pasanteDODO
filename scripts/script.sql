@@ -1,6 +1,12 @@
 CREATE DATABASE pasantesdo;
 
 
-create table users (
-    id SERIAL PRIMARY KEY NOT NULL 
-)
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY NOT NULL, 
+    name VARCHAR NOT NULL,
+    lastname VARCHAR NOT NULL,
+    email VARCHAR NOT NULL UNIQUE,
+    password VARCHAR NOT NULL,
+);
+
+ALTER TABLE users ADD COLUMN phone VARCHAR NOT NULL;
