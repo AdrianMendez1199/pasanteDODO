@@ -6,12 +6,10 @@ type User {
     phone: String!
 }
 
-
 type Query {
     getUser(id: ID): [User]
     getUserByEmail(email: String!): User!
 }
-
 
 
 type Mutation {

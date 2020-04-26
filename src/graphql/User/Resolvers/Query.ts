@@ -1,5 +1,4 @@
 import {Context} from '../../..'
-
 import {User} from '../User'
 
 function getUser(parent : { id : number}, args: User, ctx: Context): [User] {
@@ -12,7 +11,7 @@ function getUser(parent : { id : number}, args: User, ctx: Context): [User] {
     
     return prisma.users.findMany({
         where:{
-            id: Number(id),
+            id
         }
     })
 

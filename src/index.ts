@@ -11,7 +11,7 @@ dotenv.config()
 export interface Context {
     prisma: typeof prisma;
     pubSub: typeof pubSub;
-    request?:any
+    request?:any;
 }
 
 const context: Context = {
@@ -19,7 +19,7 @@ const context: Context = {
     pubSub,
 }
 
-const options = {
+const options : Object = {
     port: process.env.GRAPHQL_SERVER_PORT,
     endpoint: process.env.GRAPHQL_END_POINT,
     playground: process.env.GRAPHQL_PLAYGROUND, 
