@@ -12,12 +12,14 @@ services:
       - postgres
     ports:
       - "4000:4000"
-      - "5432:5432"
+      
   
   postgres:
     image: postgres:11.2-alpine
     environment:
       POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
 
   webserver:
     image: nginx:mainline-alpine
