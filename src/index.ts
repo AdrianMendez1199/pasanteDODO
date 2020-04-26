@@ -23,7 +23,7 @@ const options : Object = {
     port: process.env.GRAPHQL_SERVER_PORT,
     endpoint: process.env.GRAPHQL_END_POINT,
     playground: process.env.GRAPHQL_PLAYGROUND, 
-    debug: false
+    debug: true
 }
 
 
