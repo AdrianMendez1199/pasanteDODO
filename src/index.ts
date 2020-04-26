@@ -8,7 +8,6 @@ const pubSub = new PubSub();
 
 dotenv.config()
 
-
 export interface Context {
     prisma: typeof prisma;
     pubSub: typeof pubSub;
@@ -24,6 +23,7 @@ const options = {
     port: process.env.GRAPHQL_SERVER_PORT,
     endpoint: process.env.GRAPHQL_END_POINT,
     playground: process.env.GRAPHQL_PLAYGROUND, 
+    debug: false
 }
 
 

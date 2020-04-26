@@ -9,4 +9,20 @@ type User {
 
 type Query {
     getUser(id: ID): [User]
+    getUserByEmail(email: String!): User!
+}
+
+
+
+type Mutation {
+ signup(data: signUpInput!): User!
+}
+
+
+input signUpInput {
+    name: String!
+    lastname: String!
+    password: String!
+    email: String!
+    phone: String!
 }
