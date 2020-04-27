@@ -55,11 +55,8 @@ export function genereteToken(User: User): string {
  * @param @request 
  * @return @Object
  */
-export function isAuthenticate(request: any): Record<string, any> {
-    let header: string = request
-
-    if (typeof request == 'object')
-        header = request.get('authorization')
+export function isAuthenticate(request: any): Record<string, any> | string{
+    const header = request.get('authorization')
 
     if(!header)
         throw new Error('Authentication required')

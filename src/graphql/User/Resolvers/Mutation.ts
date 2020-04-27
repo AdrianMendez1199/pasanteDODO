@@ -61,11 +61,10 @@ function updateUser (parent: { id: number}, args: {data: User; id: number}, ctx:
  * @returns Promise<Login>
  */
 async function login(parent: { id: number}, args: Login, ctx: Context): Promise<Login> {
+
     const {data} = args
     const {prisma} = ctx
 
-
-    // console.log(data)
     const users: User | null = await prisma.users.findOne({
         where: {
             email: data.email 
