@@ -10,7 +10,7 @@ import {User, Login, genereteToken} from '../User'
  * @param ctx 
  * @returns Promise<User>
  */
- async function signup(parent : { id : number}, args: {data: User, role: string}, ctx: Context): Promise<User> {
+async function signup(parent: { id: number}, args: {data: User; role: string}, ctx: Context): Promise<User> {
     const {data}: {data: User} = args
     const {prisma} = ctx
  
@@ -21,10 +21,10 @@ import {User, Login, genereteToken} from '../User'
         data
     })
 
-     await prisma.user_role.create({
+    await prisma.user_role.create({
         data: {
-          role:{connect: {id: 1}},
-          users:{connect: {id: userCreated.id}}
+            role:{connect: {id: 1}},
+            users:{connect: {id: userCreated.id}}
         }
     })
 
@@ -37,8 +37,8 @@ import {User, Login, genereteToken} from '../User'
  * @param args 
  * @param ctx 
  */
-function updateUser (parent : { id : number}, args: {data: User, id: number}, ctx: Context): Promise<User> {
-    const {data, id}: {data: User, id: number} = args
+function updateUser (parent: { id: number}, args: {data: User; id: number}, ctx: Context): Promise<User> {
+    const {data, id}: {data: User; id: number} = args
     const {prisma} = ctx
 
     const updatedUser = prisma.users.update({
@@ -60,7 +60,7 @@ function updateUser (parent : { id : number}, args: {data: User, id: number}, ct
  * @param ctx 
  * @returns Promise<Login>
  */
-async function login(parent : { id : number}, args: Login, ctx: Context): Promise<Login> {
+async function login(parent: { id: number}, args: Login, ctx: Context): Promise<Login> {
     const {data} = args
     const {prisma} = ctx
 
@@ -68,17 +68,17 @@ async function login(parent : { id : number}, args: Login, ctx: Context): Promis
     // console.log(data)
     const users: User | null = await prisma.users.findOne({
         where: {
-          email: data.email 
+            email: data.email 
         }
     })
 
     if(!users)
-      throw new Error(`incorrect crendentials`)
+        throw new Error('incorrect crendentials')
 
     const isAuth = await bcrypt.compare(data.password, users.password)
 
     if(!isAuth)
-        throw new Error(`incorrect crendentials`)
+        throw new Error('incorrect crendentials')
 
     const token: string = genereteToken(users)
 

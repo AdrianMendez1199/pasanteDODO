@@ -8,7 +8,7 @@ export interface User {
     email: string;
     phone: string;
     password: string;
-    orderBy?: any
+    orderBy?: any;
 }
 
 export enum RoleOpt {
@@ -23,9 +23,9 @@ export enum RoleOpt {
 // }
 
 export interface Role {
-    name: RoleOpt
-    user_id: number
-    role_id: number
+    name: RoleOpt;
+    user_id: number;
+    role_id: number;
 }
 
 
@@ -55,16 +55,16 @@ export function genereteToken(User: User): string {
  * @param @request 
  * @return @Object
  */
-export function isAuthenticate(request: any): Object {
+export function isAuthenticate(request: any): Record<string, any> {
     let header: string = request
 
-    if (typeof request == "object")
-         header = request.get('authorization')
+    if (typeof request == 'object')
+        header = request.get('authorization')
 
     if(!header)
-       throw new Error(`Authentication required`)
+        throw new Error('Authentication required')
 
-   const token: string = header.replace('Bearer ', '')
-   return jwt.verify(token,  process.env.SECRET_TOKEN || '1212')
+    const token: string = header.replace('Bearer ', '')
+    return jwt.verify(token,  process.env.SECRET_TOKEN || '1212')
 } 
 

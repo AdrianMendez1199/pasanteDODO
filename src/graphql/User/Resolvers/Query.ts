@@ -1,7 +1,7 @@
 import {Context} from '../../..'
 import {User, isAuthenticate} from '../User'
 
-function getUser(parent : { id : number}, args: User, ctx: Context): [User] {
+function getUser(parent: { id: number}, args: User, ctx: Context): [User] {
     const  id = Number(args.id)
     const {orderBy} = args
     const {prisma}: any = ctx
@@ -22,8 +22,8 @@ function getUser(parent : { id : number}, args: User, ctx: Context): [User] {
 }
 
 
-function getUserByEmail(parent : { id : number}, args: User, ctx: Context): [User] {
-    const { email }: {email:string} =  args
+function getUserByEmail(parent: { id: number}, args: User, ctx: Context): [User] {
+    const { email }: {email: string} =  args
     const {prisma, request}: any = ctx
 
     // isAuthenticate(request)
