@@ -1,0 +1,58 @@
+type User {
+    id: ID!
+    name: String!
+    lastname: String!
+    email: String!
+    phone: String!
+}
+
+type Query {
+    getUser(id: ID, orderBy: userOrderByInput): [User]
+    getUserByEmail(email: String!): User!
+}
+
+
+type Mutation {
+ signup(data: signUpInput!): User!
+ updateUser(id: ID,  data: updateUserInput): User!
+ login(data: loginInput!): payloadAuth!
+}
+
+input loginInput{
+    email: String!
+    password: String!
+}
+
+type payloadAuth {
+    token: String!
+    data: User!
+}
+
+input updateUserInput {
+    name: String
+    lastname: String
+    password: String
+    email: String
+    phone: String
+}
+
+
+input signUpInput {
+    name: String!
+    lastname: String!
+    password: String!
+    email: String!
+    phone: String!
+}
+
+input userOrderByInput {
+    id: orderByArgs
+    name: orderByArgs
+    lastname: orderByArgs
+    email: orderByArgs
+}
+
+enum orderByArgs {
+    asc,
+    desc
+}
