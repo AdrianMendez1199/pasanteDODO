@@ -15,6 +15,17 @@ type Query {
 type Mutation {
  signup(data: signUpInput!): User!
  updateUser(id: ID,  data: updateUserInput): User!
+ login(data: loginInput!): payloadAuth!
+}
+
+input loginInput{
+    email: String!
+    password: String!
+}
+
+type payloadAuth {
+    token: String!
+    data: User!
 }
 
 input updateUserInput {

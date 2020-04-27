@@ -1,6 +1,6 @@
 import {Context} from '../../..'
 import bcrypt from 'bcrypt'
-import {User, Role} from '../User'
+import {User, Login, genereteToken} from '../User'
 
 
 /**
@@ -31,7 +31,12 @@ import {User, Role} from '../User'
     return userCreated
 }
 
-
+/**
+ * this function update user
+ * @param parent 
+ * @param args 
+ * @param ctx 
+ */
 function updateUser (parent : { id : number}, args: {data: User, id: number}, ctx: Context): Promise<User> {
     const {data, id}: {data: User, id: number} = args
     const {prisma} = ctx
@@ -48,8 +53,43 @@ function updateUser (parent : { id : number}, args: {data: User, id: number}, ct
 
 }
 
+/**
+ * function login
+ * @param parent 
+ * @param args 
+ * @param ctx 
+ * @returns Promise<Login>
+ */
+async function login(parent : { id : number}, args: Login, ctx: Context): Promise<Login> {
+    const {data} = args
+    const {prisma} = ctx
+
+
+    // console.log(data)
+    const users: User | null = await prisma.users.findOne({
+        where: {
+          email: data.email 
+        }
+    })
+
+    if(!users)
+      throw new Error(`incorrect crendentials`)
+
+    const isAuth = await bcrypt.compare(data.password, users.password)
+
+    if(!isAuth)
+        throw new Error(`incorrect crendentials`)
+
+    const token: string = genereteToken(users)
+
+    return {
+        token: token, data:users
+    }
+
+}
 
 export const Mutation = {
     signup,
-    updateUser
+    updateUser,
+    login
 }

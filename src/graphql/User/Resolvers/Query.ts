@@ -29,7 +29,6 @@ function getUserByEmail(parent : { id : number}, args: User, ctx: Context): [Use
     })
 }
 
-
 export const Query = {
     getUser,
     getUserByEmail
