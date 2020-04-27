@@ -32,7 +32,7 @@ export interface Login {
 /**
  * this function return
  * jwt token
- * @param User 
+ * @param @User 
  */
 export function genereteToken(User: User): string {
     const {name, lastname, email, phone} = User
@@ -40,6 +40,25 @@ export function genereteToken(User: User): string {
     const tokenFormed = {
         name, lastname, email, phone
     }
-    return jwt.sign({tokenFormed}, process.env.SECRET_TOKEN || '1212')
+    return jwt.sign({tokenFormed}, process.env.SECRET_TOKEN || '1212', {expiresIn: '2 days'})
 }
+
+/**
+ * this function 
+ * return decode token
+ * @param @request 
+ * @return @Object
+ */
+export function isAuthenticate(request: any): Object {
+    let header: string = request
+
+    if (typeof request == "object")
+         header = request.get('authorization')
+
+    if(!header)
+       throw new Error(`Authentication required`)
+
+   const token: string = header.replace('Bearer ', '')
+   return jwt.verify(token,  process.env.SECRET_TOKEN || '1212')
+} 
 
