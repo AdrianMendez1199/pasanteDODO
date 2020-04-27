@@ -35,7 +35,8 @@ const server = new GraphQLServer({
             ...request,
             ...context
         }
-    }
+    },
+    // middlewares TODO
 });
 
 server.start(options, ({ port, playground }): void =>

@@ -7,7 +7,8 @@ export interface User {
     lastname: string;
     email: string;
     phone: string;
-    password: string
+    password: string;
+    orderBy?: any
 }
 
 export enum RoleOpt {
@@ -15,6 +16,11 @@ export enum RoleOpt {
     EMPLOYEE
 }
 
+
+// enum orderByArgs {
+//     ASC,
+//     DESC
+// }
 
 export interface Role {
     name: RoleOpt

@@ -1,0 +1,18 @@
+type Mutation {
+    createCompanie(data: inputCompanie): companie!
+}
+
+type companie {
+    name: String!
+    email: String!
+    description: String!
+    phone: String!
+}
+
+input inputCompanie {
+    name: String!
+    email: String!
+    description: String!
+    password: String!
+    phone: String!
+}

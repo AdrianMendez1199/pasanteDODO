@@ -7,7 +7,7 @@ type User {
 }
 
 type Query {
-    getUser(id: ID): [User]
+    getUser(id: ID, orderBy: userOrderByInput): [User]
     getUserByEmail(email: String!): User!
 }
 
@@ -43,4 +43,16 @@ input signUpInput {
     password: String!
     email: String!
     phone: String!
+}
+
+input userOrderByInput {
+    id: orderByArgs
+    name: orderByArgs
+    lastname: orderByArgs
+    email: orderByArgs
+}
+
+enum orderByArgs {
+    asc,
+    desc
 }
