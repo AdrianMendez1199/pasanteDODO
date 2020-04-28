@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR NOT NULL,
     lastname VARCHAR NOT NULL,
     email VARCHAR NOT NULL UNIQUE,
-    password VARCHAR NOT NULL,
+    password VARCHAR NOT NULL
 );
 
 ALTER TABLE users ADD COLUMN phone VARCHAR NOT NULL;
