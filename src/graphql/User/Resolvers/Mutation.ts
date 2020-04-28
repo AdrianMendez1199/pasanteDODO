@@ -10,7 +10,7 @@ import {User, Login, genereteToken} from '../User'
  * @param ctx 
  * @returns Promise<User>
  */
-async function signup(parent: { id: number}, args: {data: User; role: string}, ctx: Context): Promise<User> {
+async function signup(parent: { id: number}, args: {data: User}, ctx: Context): Promise<User> {
     const {data}: {data: User} = args
     const {prisma} = ctx
  
