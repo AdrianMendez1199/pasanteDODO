@@ -11,7 +11,14 @@ dotenv.config()
 export interface Context {
     prisma: typeof prisma;
     pubSub: typeof pubSub;
-    request?: any;
+    request?: unknown;
+}
+
+interface OptionServer {
+    port: number;
+    endpoint: string;
+    playground: string;
+    debug: boolean;
 }
 
 const context: Context = {
@@ -19,18 +26,18 @@ const context: Context = {
     pubSub,
 }
 
-const options: Record<string, any> = {
-    port: process.env.GRAPHQL_SERVER_PORT,
-    endpoint: process.env.GRAPHQL_END_POINT,
-    playground: process.env.GRAPHQL_PLAYGROUND, 
+const options: OptionServer = {
+    port: Number(process.env.GRAPHQL_SERVER_PORT) || 3005,
+    endpoint: process.env.GRAPHQL_END_POINT || '/graphql',
+    playground: process.env.GRAPHQL_PLAYGROUND || '/playground', 
     debug: true
 }
 
 
-const server = new GraphQLServer({
+const server: GraphQLServer = new GraphQLServer({
     typeDefs,
     resolvers,
-    context: request => {
+    context: (request): object  => {
         return {
             ...request,
             ...context
