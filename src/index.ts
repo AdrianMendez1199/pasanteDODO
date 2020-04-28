@@ -46,6 +46,4 @@ const server: GraphQLServer = new GraphQLServer({
     // middlewares TODO
 });
 
-server.start(options, ({ port, playground }): void =>
-    console.info(`Server runing http://localhost:${port}${playground}`)
-)
+server.start(options) 
