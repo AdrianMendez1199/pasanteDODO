@@ -4,13 +4,13 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-USER node
+#USER node
 
 RUN rm -rf node_modules
 RUN rm -rf dist 
 
 COPY . .
-COPY --chown=node:node . .
+#COPY --chown=node:node . .
 
 RUN yarn add \
  yarn build
