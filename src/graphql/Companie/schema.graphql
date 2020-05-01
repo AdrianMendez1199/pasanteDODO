@@ -1,11 +1,19 @@
 type Mutation {
     createCompanie(data: inputCompanie): companie!
+    # updateCompanie(data: inputCompanieUpdate): companie!
 }
 
 type companie {
+    """ Name  of companie """
     name: String!
+
+    """ Email companie ex: email@gmail.com """
     email: String!
+
+    """ Companie description ex: this a companie of telecomunication"""
     description: String!
+
+    """ number phone of companie ex: 809xxxxxx """
     phone: String!
 }
 
@@ -15,4 +23,12 @@ input inputCompanie {
     description: String!
     password: String!
     phone: String!
+}
+
+
+type inputCompanieUpdate {
+ name: String
+ email: String
+ description: String
+ phone: String
 }
