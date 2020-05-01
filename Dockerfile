@@ -9,10 +9,14 @@ COPY package*.json ./
 RUN rm -rf node_modules
 RUN rm -rf dist 
 
+RUN apk add build-base 
+RUN yarn add node-gyp -g  
+
 COPY . .
+
+ RUN yarn build
+
 #COPY --chown=node:node . .
 
-RUN yarn add \
- yarn build
 
 CMD ["yarn", "dev"]
