@@ -4,15 +4,24 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-USER node
+#USER node
 
-RUN rm -rf node_modules
-RUN rm -rf dist 
+RUN rm -rf node_modules dist 
+
+RUN apk add build-base \
+     python3
+
+# RUN yarn add node-gyp -g  
 
 COPY . .
-COPY --chown=node:node . .
 
-RUN yarn add \
- yarn build
+RUN yarn install 
+RUN yarn build 
 
-CMD ["yarn", "dev"]
+RUN chmod +x ./scripts/schema.sh
+RUN sh ./scripts/schema.sh
+
+# RUN npx prisma generate
+#COPY --chown=node:node . .
+
+CMD ["node", "./dist/src/index.js"]
