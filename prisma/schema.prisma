@@ -7,10 +7,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model categories {
+  description String?
+  id          Int     @default(autoincrement()) @id
+  name        String
+  job         job[]
+}
+
+model job {
+  category_id      Int
+  created_at       DateTime   @default(now())
+  description      String?
+  id               Int        @default(autoincrement()) @id
+  job_available    available?
+  name             String
+  number_positions Int?
+  published_by     Int
+  updated_at       DateTime   @default(now())
+  categories       categories @relation(fields: [category_id], references: [id])
+  users            users      @relation(fields: [published_by], references: [id])
+}
+
 model role {
   description String
   id          Int         @default(autoincrement()) @id
-  name        String      @unique
+  name        String
   user_role   user_role[]
 }
 
@@ -29,5 +50,11 @@ model users {
   name      String
   password  String
   phone     String
+  job       job[]
   user_role user_role[]
+}
+
+enum available {
+  NO
+  YES
 }

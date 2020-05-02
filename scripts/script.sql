@@ -26,3 +26,45 @@ CREATE TABLE IF NOT EXISTS user_role (
  FOREIGN KEY (user_id) REFERENCES users(id),
  FOREIGN KEY (role_id) REFERENCES role(id)
 );
+
+
+-- CREATE TABLE IF NOT EXISTS company (
+--  id SERIAL PRIMARY KEY NOT NULL, 
+--  name VARCHAR NOT NULL,
+--  description VARCHAR NOT NULL,
+--  email VARCHAR NOT NULL,
+--  phone VARCHAR NOT NULL,
+--  website VARCHAR,
+--  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+--  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+-- );
+
+
+-- ALTER TABLE company ADD COLUMN password VARCHAR NOT NULL;
+
+
+CREATE TABLE categories (
+ id SERIAL PRIMARY KEY NOT NULL,
+ name VARCHAR NOT NULL,
+ description VARCHAR
+);
+
+
+CREATE TYPE available AS ENUM ('YES', 'NO');
+
+
+CREATE TABLE job (
+ id SERIAL PRIMARY KEY NOT NULL,
+ name VARCHAR NOT NULL,
+ description VARCHAR,
+ number_positions INTEGER,
+ published_by INTEGER NOT NULL,
+ category_id INTEGER NOT NULL,
+ job_available available,
+ created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+ FOREIGN KEY (published_by) REFERENCES users(id),
+ FOREIGN KEY (category_id) REFERENCES categories(id) 
+
+);

@@ -1,0 +1,25 @@
+type Query {
+    getJob(id: ID): [Job!]!
+}
+
+
+type Job {
+    name: String!
+    description: String!
+    number_positions: Int!
+    publishedBy: User!
+    jobAvailable: jobAvailable
+    categoryId: Category!
+}
+
+
+type Category {
+    name: String!
+    description: String!
+}
+
+enum jobAvailable {
+    YES,
+    NO
+}
+

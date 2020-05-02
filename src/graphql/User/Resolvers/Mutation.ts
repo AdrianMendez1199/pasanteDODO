@@ -23,7 +23,7 @@ async function signup(parent: { id: number}, args: {data: User}, ctx: Context): 
 
     await prisma.user_role.create({
         data: {
-            role:{connect: {id: 1}},
+            role:{connect: {id: 2}},
             users:{connect: {id: userCreated.id}}
         }
     })
