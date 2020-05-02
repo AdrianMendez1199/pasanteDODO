@@ -6,17 +6,22 @@ COPY package*.json ./
 
 #USER node
 
-RUN rm -rf node_modules
-RUN rm -rf dist 
+RUN rm -rf node_modules dist 
 
-RUN apk add build-base 
-RUN yarn add node-gyp -g  
+RUN apk add build-base \
+     python3
+
+# RUN yarn add node-gyp -g  
 
 COPY . .
 
- RUN yarn build
+RUN yarn install 
+RUN yarn build 
 
+RUN chmod +x ./scripts/schema.sh
+RUN sh ./scripts/schema.sh
+
+# RUN npx prisma generate
 #COPY --chown=node:node . .
 
-
-CMD ["yarn", "dev"]
+CMD ["node", "./dist/src/index.js"]

@@ -8,15 +8,12 @@
     "lint": "eslint . --ext .ts",
     "remove": "rm -rf dist",
     "build": "tsc",
-    "server": "node ./dist/src/index.js",
+    "server": "node ./dist/index.js",
     "ts": "ts-node ./src/index.ts",
-    "dev": "NODE_ENV=development nodemon",
-    "user-t": "cp ./src/graphql/User/schema.graphql ./dist/src/graphql/User"
+    "dev": "NODE_ENV=development nodemon"
   },
   "dependencies": {
     "@prisma/client": "^2.0.0-beta.3",
-    "@types/bcrypt": "^3.0.0",
-    "@types/jsonwebtoken": "^8.3.9",
     "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
     "graphql-tools": "^5.0.0",
@@ -26,6 +23,8 @@
   },
   "devDependencies": {
     "@prisma/cli": "^2.0.0-beta.3",
+    "@types/bcrypt": "^3.0.0",
+    "@types/jsonwebtoken": "^8.3.9",
     "@types/node": "^13.13.2",
     "@types/ws": "^7.2.4",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
@@ -35,6 +34,7 @@
     "nodemon": "^2.0.3",
     "npm-run-all": "^4.1.5",
     "ts-node": "^8.9.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "webpack-graphql-loader": "^1.0.2"
   }
 }
