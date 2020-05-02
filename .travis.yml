@@ -30,3 +30,6 @@ script:
 
 after_script:
   - docker-compose down
+  
+file:
+    - "README.md"
