@@ -24,7 +24,8 @@ before_script:
   - docker-compose up -d --build
 
 script:
-  - docker exec pasantes_v1 node ./dist/src/index.js
+  - curl -v localhost/playground
+  # - docker exec pasantes_v1 node ./dist/src/index.js
 
 after_script:
   - docker-compose down
