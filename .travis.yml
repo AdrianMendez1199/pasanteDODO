@@ -24,7 +24,7 @@ before_script:
   - docker-compose up -d --build
 
 script:
-  - docker-compose exec pasantes-do node ./dist/src/index.js
+  - docker exec pasantes_v1 node ./dist/src/index.js
 
 after_script:
   - docker-compose down
