@@ -1,0 +1,40 @@
+type Query {
+    getJob(id: ID): [Job!]!
+}
+
+
+type Job {
+    name: String!
+    description: String!
+    numberPositions: Int!
+    publishedBy: User!
+    jobAvailable: jobAvailable
+    categoryId: Category!
+}
+
+
+type Category {
+    name: String!
+    description: String!
+}
+
+type Mutation {
+  publishJob(data: publishJobInput!): Job!
+  applyToJob(userId: ID, jobId: ID): Job!
+}
+
+
+input publishJobInput {
+  name: String!
+  description: String!
+  numberPositions: Int!
+  publishedBy: Int!
+  jobAvailable: jobAvailable
+  categoryId: Int!
+}
+
+
+enum jobAvailable {
+    YES,
+    NO
+}
