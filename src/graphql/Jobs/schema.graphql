@@ -20,6 +20,7 @@ type Category {
 
 type Mutation {
   publishJob(data: publishJobInput!): Job!
+  applyToJob(userId: ID, jobId: ID): Job!
 }
 
 

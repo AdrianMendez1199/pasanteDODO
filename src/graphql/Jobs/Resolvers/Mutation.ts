@@ -26,6 +26,30 @@ function publishJob(parent: { id: number}, args: {data: JobCreate}, ctx: Context
 }
 
 
+async function applyToJob(parent: { id: number}, args: {userId: number, jobId: number}, ctx: Context) {
+  const {prisma} = ctx
+  const {userId, jobId} = args
+
+
+  const userApplyToJob : Array<Object>  = await prisma.apply_job.findMany({
+    where:{
+        userId: Number(userId),
+        jobId: Number(jobId)
+    }
+  })
+
+  if(userApplyToJob.length > 0)
+    throw new Error(`you previously applied to this proposal`)
+
+  return prisma.apply_job.create({
+     data: {
+         job:{connect: {id: Number(jobId)}},
+         users: {connect: {id: Number(userId)}}
+     }
+  }).job()
+
+}
+
 export const Mutation = {
-    publishJob
+    publishJob, applyToJob
 }

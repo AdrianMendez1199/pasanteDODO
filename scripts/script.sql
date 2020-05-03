@@ -53,18 +53,28 @@ CREATE TABLE categories (
 CREATE TYPE available AS ENUM ('YES', 'NO');
 
 
-CREATE TABLE job (
+CREATE TABLE IF NOT EXISTS job (
  id SERIAL PRIMARY KEY NOT NULL,
  name VARCHAR NOT NULL,
  description VARCHAR,
- number_positions INTEGER,
- published_by INTEGER NOT NULL,
- category_id INTEGER NOT NULL,
- job_available available,
- created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
- updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ `numberPositions` INTEGER,
+ `publishedBy` INTEGER NOT NULL,
+ `categoryId` INTEGER NOT NULL,
+ `jobAvailable` available,
+ `createdAt` TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ `updatedAt` TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
- FOREIGN KEY (published_by) REFERENCES users(id),
- FOREIGN KEY (category_id) REFERENCES categories(id) 
+ FOREIGN KEY (`publishedBy`) REFERENCES users(id),
+ FOREIGN KEY (`categoryId`) REFERENCES categories(id) 
 
+);
+
+
+CREATE TABLE IF NOT EXISTS apply_job (
+ id SERIAL PRIMARY KEY NOT NULL,
+ "userId" INTEGER NOT NULL,
+ "jobId" INTEGER NOT NULL,
+
+ FOREIGN KEY ("userId") REFERENCES users(id),
+ FOREIGN KEY ("jobId") REFERENCES job(id) 
 );
