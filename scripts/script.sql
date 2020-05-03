@@ -57,15 +57,15 @@ CREATE TABLE IF NOT EXISTS job (
  id SERIAL PRIMARY KEY NOT NULL,
  name VARCHAR NOT NULL,
  description VARCHAR,
- `numberPositions` INTEGER,
- `publishedBy` INTEGER NOT NULL,
- `categoryId` INTEGER NOT NULL,
- `jobAvailable` available,
- `createdAt` TIMESTAMPTZ NOT NULL DEFAULT NOW(),
- `updatedAt` TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ "numberPositions" INTEGER,
+ "publishedBy" INTEGER NOT NULL,
+ "categoryId" INTEGER NOT NULL,
+ "jobAvailable" available,
+ "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
- FOREIGN KEY (`publishedBy`) REFERENCES users(id),
- FOREIGN KEY (`categoryId`) REFERENCES categories(id) 
+ FOREIGN KEY ("publishedBy") REFERENCES users(id),
+ FOREIGN KEY ("categoryId") REFERENCES categories(id) 
 
 );
 

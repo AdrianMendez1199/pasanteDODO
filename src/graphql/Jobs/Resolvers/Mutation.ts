@@ -1,5 +1,5 @@
 import {Context} from '../../..'
-import { Job,  JobCreate} from '../Job'
+import { Job,  JobCreate, ApplyJob} from '../Job'
 
 /**
   * this function create Job
@@ -26,12 +26,12 @@ function publishJob(parent: { id: number}, args: {data: JobCreate}, ctx: Context
 }
 
 
-async function applyToJob(parent: { id: number}, args: {userId: number; jobId: number}, ctx: Context): Promise<Job> {
+async function applyToJob(parent: { id: number}, args: {userId: number; jobId: number}, ctx: Context): Promise<unknown> {
     const {prisma} = ctx
     const {userId, jobId} = args
 
 
-    const userApplyToJob: Array<Record<string, any>>  = await prisma.apply_job.findMany({
+    const userApplyToJob: Array<ApplyJob>  = await prisma.apply_job.findMany({
         where:{
             userId: Number(userId),
             jobId: Number(jobId)

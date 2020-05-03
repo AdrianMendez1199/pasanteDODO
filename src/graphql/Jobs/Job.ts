@@ -26,4 +26,9 @@ export enum jobAvailable {
     'NO'
 }
 
+export type ApplyJob = { 
+ id: number;
+ userId: number;
+ jobId: number;
+}
 
