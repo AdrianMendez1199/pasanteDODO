@@ -6,7 +6,7 @@ type Query {
 type Job {
     name: String!
     description: String!
-    number_positions: Int!
+    numberPositions: Int!
     publishedBy: User!
     jobAvailable: jobAvailable
     categoryId: Category!
@@ -18,8 +18,22 @@ type Category {
     description: String!
 }
 
+type Mutation {
+  publishJob(data: publishJobInput!): Job!
+}
+
+
+input publishJobInput {
+  name: String!
+  description: String!
+  numberPositions: Int!
+  publishedBy: Int!
+  jobAvailable: jobAvailable
+  categoryId: Int!
+}
+
+
 enum jobAvailable {
     YES,
     NO
 }
-

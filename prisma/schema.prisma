@@ -15,17 +15,17 @@ model categories {
 }
 
 model job {
-  category_id      Int
-  created_at       DateTime   @default(now())
-  description      String?
-  id               Int        @default(autoincrement()) @id
-  job_available    available?
-  name             String
-  number_positions Int?
-  published_by     Int
-  updated_at       DateTime   @default(now())
-  categories       categories @relation(fields: [category_id], references: [id])
-  users            users      @relation(fields: [published_by], references: [id])
+  categoryId      Int
+  createdAt       DateTime   @default(now())
+  description     String?
+  id              Int        @default(autoincrement()) @id
+  jobAvailable    available?
+  name            String
+  numberPositions Int?
+  publishedBy     Int
+  updatedAt       DateTime   @default(now())
+  categories      categories @relation(fields: [categoryId], references: [id])
+  users           users      @relation(fields: [publishedBy], references: [id])
 }
 
 model role {

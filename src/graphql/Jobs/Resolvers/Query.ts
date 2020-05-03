@@ -1,22 +1,15 @@
 import {Context} from '../../..'
-import {User} from '../../User/User'
+import { Job as JobInterface} from '../Job'
 
-export interface Job {
-    id: number;
-    name: string;
-    description: string;
-    number_positions: number;
-    publishedBy: number;
-    jobAvailable: jobAvailable;
-    categoryId: number;
-}
 
-enum jobAvailable {
-    YES,
-    NO
-}
-
-function getJob(parent: { id: number}, args: Job, ctx: Context): [Job] {
+/**
+ * this function return 
+ * all job 
+ * @param parent 
+ * @param args 
+ * @param ctx 
+ */
+function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<JobInterface[]>   {
     const {prisma}: Context = ctx
     const {id}  = args
 
@@ -31,9 +24,14 @@ function getJob(parent: { id: number}, args: Job, ctx: Context): [Job] {
     
 }
 
-
-
-function publishedBy(parent: { id: number}, args: any, ctx: Context): User {
+/**
+ * return Job published by User
+ * @param parent 
+ * @param args 
+ * @param ctx 
+ * @return User
+ */
+async function publishedBy(parent: { id: number}, args: {id: number}, ctx: Context): Promise<unknown>  {
     const {prisma}: Context = ctx
     const {id} = parent
 

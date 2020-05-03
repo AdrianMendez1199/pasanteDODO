@@ -64,4 +64,3 @@ export function isAuthenticate(request: Record<string, any>): Record<string, any
     const token: string = header.replace('Bearer ', '')
     return jwt.verify(token,  process.env.SECRET_TOKEN || '1212')
 } 
-

@@ -1,6 +1,6 @@
-import {GraphQLServer, PubSub} from 'graphql-yoga';
+import {GraphQLServer, PubSub} from 'graphql-yoga'
 import {types as typeDefs, resolvers} from './graphql'
-import {PrismaClient} from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
 import dotenv from 'dotenv'
 
 const prisma = new PrismaClient();
