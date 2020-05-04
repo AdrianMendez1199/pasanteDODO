@@ -9,7 +9,7 @@ import { Job as JobInterface} from '../Job'
  * @param args 
  * @param ctx 
  */
-function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<object[]>   {
+function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<JobInterface[]>   {
     const {prisma}: Context = ctx
     const {id, orderBy}  = args
 
