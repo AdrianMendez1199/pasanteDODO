@@ -8,7 +8,7 @@ export interface User {
     email: string;
     phone: string;
     password: string;
-    orderBy?: orderByArgs;
+    orderBy?: any;
 }
 
 export enum RoleOpt {
@@ -17,7 +17,7 @@ export enum RoleOpt {
 }
 
 
-enum orderByArgs {
+export enum orderByArgs {
     asc,
     desc
 }
@@ -32,6 +32,10 @@ export interface Role {
 export interface Login {
  token: string;
  data: User;
+}
+
+export interface Request {
+    get: (p: string) => string;
 }
 
 
@@ -55,7 +59,7 @@ export function genereteToken(User: User): string {
  * @param @request 
  * @return @Object
  */
-export function isAuthenticate(request: Record<string, any>): Record<string, any> | string{
+export function isAuthenticate(request: Request): object | string {
     const header = request.get('authorization')
 
     if(!header)

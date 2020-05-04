@@ -6,6 +6,9 @@ type quantityAppliedJob {
   quantity: Int!
 }
 
+scalar Date
+
+
 type Job {
     name: String!
     description: String!
@@ -14,6 +17,8 @@ type Job {
     jobAvailable: jobAvailable
     categoryType: Category!
     quantityAppliedToJob: quantityAppliedJob!
+    createdAt: Date
+    updatedAt: Date
 }
 
 

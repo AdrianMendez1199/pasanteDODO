@@ -2,6 +2,7 @@ import {GraphQLServer, PubSub} from 'graphql-yoga'
 import {types as typeDefs, resolvers} from './graphql'
 import { PrismaClient } from '@prisma/client'
 import dotenv from 'dotenv'
+import { Request } from './graphql/User/User'
 
 const prisma = new PrismaClient();
 const pubSub = new PubSub();
@@ -11,7 +12,7 @@ dotenv.config()
 export interface Context {
     prisma: typeof prisma;
     pubSub: typeof pubSub;
-    request?: unknown;
+    request?: typeof Request;
 }
 
 interface OptionServer {
@@ -23,7 +24,7 @@ interface OptionServer {
 
 const context: Context = {
     prisma,
-    pubSub,
+    pubSub
 }
 
 const options: OptionServer = {

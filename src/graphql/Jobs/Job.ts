@@ -1,4 +1,6 @@
 
+// import {orderByArgs} from '../User/User'
+
 export interface Job {
     id: number;
     name: string;

@@ -1,11 +1,11 @@
 import {Context} from '../../..'
-import {User, isAuthenticate} from '../User'
+import {User} from '../User'
 
 
-function getUser(parent: { id: number}, args: User, ctx: Context): [User] {
+function getUser(parent: { id: number}, args: User, ctx: Context): object {
     const {orderBy, id}: User = args
 
-    const {prisma}: any = ctx
+    const {prisma}: Context = ctx
 
     if(!id)
         return prisma.users.findMany({
@@ -23,11 +23,11 @@ function getUser(parent: { id: number}, args: User, ctx: Context): [User] {
 }
 
 
-function getUserByEmail(parent: { id: number}, args: User, ctx: Context): [User] {
-    const { email }: {email: string} =  args
-    const {prisma, request}: any = ctx
+function getUserByEmail(parent: { id: number}, args: User, ctx: Context): object {
+    const { email }: User =  args
+    const {prisma}: Context = ctx
 
-    isAuthenticate(request)
+    // isAuthenticate(request)
 
     return prisma.users.findOne({
         where: {
