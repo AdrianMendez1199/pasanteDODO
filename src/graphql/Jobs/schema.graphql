@@ -2,6 +2,9 @@ type Query {
     getJob(id: ID): [Job!]!
 }
 
+type quantityAppliedJob {
+  quantity: Int!
+}
 
 type Job {
     name: String!
@@ -9,7 +12,8 @@ type Job {
     numberPositions: Int!
     publishedBy: User!
     jobAvailable: jobAvailable
-    categoryId: Category!
+    categoryType: Category!
+    quantityAppliedToJob: quantityAppliedJob!
 }
 
 

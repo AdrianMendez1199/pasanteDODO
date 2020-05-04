@@ -42,6 +42,44 @@ async function publishedBy(parent: { id: number}, args: {id: number}, ctx: Conte
     }).users()
 }
 
+/**
+ *  return quantity User apply to Job
+ * @param parent 
+ * @param args 
+ * @param ctx 
+ */
+async function quantityAppliedToJob(parent: { id: number}, args: {jobId: number}, ctx: Context): Promise<object> {
+    const {prisma} : Context = ctx
+
+    const {id} =  parent
+    
+ 
+    const quantity = await prisma.apply_job.count({
+        where:{
+            jobId: Number(id)
+        }
+    })
+
+    return { quantity }
+}
+
+/**
+ * return categories about jobs
+ * @param parent 
+ * @param args 
+ * @param ctx 
+ */
+function categoryType(parent: { id: number, categoryId: number}, args: {id: number}, ctx: Context) {
+    const {categoryId, id} = parent
+    const {prisma} = ctx
+
+    return prisma.job.findOne({
+      where: {
+          id: Number(id)
+      }
+    }).categories()
+}
+
 
 export const Query = {
     getJob
@@ -49,5 +87,5 @@ export const Query = {
 
 
 export const Job = {
-    publishedBy
+    publishedBy, categoryType, quantityAppliedToJob
 }
