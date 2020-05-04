@@ -7,6 +7,7 @@ export interface Job {
     publishedBy: number;
     jobAvailable: 'YES' | 'NO' | null ;
     categoryId: number;
+    orderBy?: any;
 }
 
 export interface JobCreate {
@@ -26,9 +27,14 @@ export enum jobAvailable {
     'NO'
 }
 
-export type ApplyJob = { 
+export interface ApplyJob { 
  id: number;
  userId: number;
  jobId: number;
 }
 
+export interface Categories {
+ id: number;
+ name: string;
+ description: string;
+}

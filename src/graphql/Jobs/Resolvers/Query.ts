@@ -9,12 +9,14 @@ import { Job as JobInterface} from '../Job'
  * @param args 
  * @param ctx 
  */
-function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<JobInterface[]>   {
+function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<object[]>   {
     const {prisma}: Context = ctx
-    const {id}  = args
+    const {id, orderBy}  = args
 
-    if(id)
-        return prisma.job.findMany()
+    if(!id)
+        return prisma.job.findMany({
+            orderBy
+        })
   
     return prisma.job.findMany({
         where: {
@@ -49,7 +51,7 @@ async function publishedBy(parent: { id: number}, args: {id: number}, ctx: Conte
  * @param ctx 
  */
 async function quantityAppliedToJob(parent: { id: number}, args: {jobId: number}, ctx: Context): Promise<object> {
-    const {prisma} : Context = ctx
+    const {prisma}: Context = ctx
 
     const {id} =  parent
     
@@ -69,14 +71,14 @@ async function quantityAppliedToJob(parent: { id: number}, args: {jobId: number}
  * @param args 
  * @param ctx 
  */
-function categoryType(parent: { id: number, categoryId: number}, args: {id: number}, ctx: Context) {
-    const {categoryId, id} = parent
+function categoryType(parent: { id: number}, args: {id: number}, ctx: Context): object {
+    const {id} = parent
     const {prisma} = ctx
 
     return prisma.job.findOne({
-      where: {
-          id: Number(id)
-      }
+        where: {
+            id: Number(id)
+        }
     }).categories()
 }
 
