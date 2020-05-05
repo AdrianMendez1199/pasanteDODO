@@ -37,6 +37,17 @@ model job {
   apply_job       apply_job[]
 }
 
+model profile {
+  description String?
+  endDate     DateTime?
+  id          Int       @default(autoincrement()) @id
+  institution String
+  position    String
+  startDate   DateTime
+  userId      Int
+  users       users     @relation(fields: [userId], references: [id])
+}
+
 model role {
   description String
   id          Int         @default(autoincrement()) @id
@@ -61,6 +72,7 @@ model users {
   phone     String
   apply_job apply_job[]
   job       job[]
+  profile   profile[]
   user_role user_role[]
 }
 

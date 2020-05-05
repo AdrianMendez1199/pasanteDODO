@@ -1,5 +1,5 @@
 import {Context} from '../../..'
-import { Job,  JobCreate, ApplyJob} from '../Job'
+import { Job, ApplyJob} from '../Job'
 
 /**
   * this function create Job
@@ -7,7 +7,7 @@ import { Job,  JobCreate, ApplyJob} from '../Job'
   * @param args 
   * @param ctx 
   */
-function publishJob(parent: { id: number}, args: {data: JobCreate}, ctx: Context): Promise<Job> {
+function publishJob(parent: { id: number}, args: {data: Job}, ctx: Context): Promise<Job> {
     const {data} = args
     const {prisma} = ctx
    

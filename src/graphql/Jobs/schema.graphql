@@ -1,6 +1,12 @@
 type Query {
-    getJob(id: ID): [Job!]!
+    getJob(id: ID, orderBy: orderBy): [Job!]!
 }
+
+type quantityAppliedJob {
+  quantity: Int!
+}
+
+scalar Date
 
 
 type Job {
@@ -9,7 +15,10 @@ type Job {
     numberPositions: Int!
     publishedBy: User!
     jobAvailable: jobAvailable
-    categoryId: Category!
+    categoryType: Category!
+    quantityAppliedToJob: quantityAppliedJob!
+    createdAt: Date
+    updatedAt: Date
 }
 
 
@@ -37,4 +46,17 @@ input publishJobInput {
 enum jobAvailable {
     YES,
     NO
+}
+
+input orderBy {
+  id: orderByArgs
+  name: orderByArgs
+  publishedBy: orderByArgs
+  createdAt: orderByArgs
+  updatedAt: orderByArgs
+}
+
+enum orderByArgs {
+  desc,
+  asc
 }

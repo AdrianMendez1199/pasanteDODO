@@ -4,6 +4,23 @@ type User {
     lastname: String!
     email: String!
     phone: String!
+    userProfile: [experiencePayload!]!
+}
+
+
+input experience {
+  userId: Int!
+  institution: String!
+  position: String!
+  startDate: Date!
+  endDate: Date
+}
+
+type experiencePayload {
+  institution: String!
+  position: String!
+  startDate: Date!
+  endDate: Date!
 }
 
 type Query {
@@ -16,6 +33,7 @@ type Mutation {
  signup(data: signUpInput!): User!
  updateUser(id: ID,  data: updateUserInput): User!
  login(data: loginInput!): payloadAuth!
+ uploadProfile(data: [experience]): [experiencePayload!]!
 }
 
 input loginInput{

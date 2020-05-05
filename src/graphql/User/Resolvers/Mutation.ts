@@ -1,6 +1,6 @@
 import {Context} from '../../..'
 import bcrypt from 'bcrypt'
-import {User, Login, genereteToken} from '../User'
+import {User, Login, genereteToken, Profile} from '../User'
 
 
 /**
@@ -82,13 +82,38 @@ async function login(parent: { id: number}, args: Login, ctx: Context): Promise<
     const token: string = genereteToken(users)
 
     return {
-        token: token, data:users
+        token, data:users
     }
+
+}
+
+async function uploadProfile (parent: { id: number}, args: Profile, ctx: Context): Promise<object> {
+    const {data} = args
+    const {prisma} = ctx
+
+
+    const createManyProfile = data.map((profile: Profile) =>
+        prisma.profile.create({
+            data: {
+                institution: profile.institution,
+                position:    profile.position,
+                startDate:   new Date(profile.startDate),
+                users:{
+                    connect: {id: Number(profile.userId)}
+                }
+            }
+        }),
+
+    );
+ 
+    const profile: Array<object> = await Promise.all(createManyProfile)
+    return profile
 
 }
 
 export const Mutation = {
     signup,
     updateUser,
-    login
+    login,
+    uploadProfile
 }

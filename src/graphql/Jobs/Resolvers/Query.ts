@@ -11,10 +11,12 @@ import { Job as JobInterface} from '../Job'
  */
 function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<JobInterface[]>   {
     const {prisma}: Context = ctx
-    const {id}  = args
+    const {id, orderBy}  = args
 
-    if(id)
-        return prisma.job.findMany()
+    if(!id)
+        return prisma.job.findMany({
+            orderBy
+        })
   
     return prisma.job.findMany({
         where: {
@@ -42,6 +44,44 @@ async function publishedBy(parent: { id: number}, args: {id: number}, ctx: Conte
     }).users()
 }
 
+/**
+ *  return quantity User apply to Job
+ * @param parent 
+ * @param args 
+ * @param ctx 
+ */
+async function quantityAppliedToJob(parent: { id: number}, args: {jobId: number}, ctx: Context): Promise<object> {
+    const {prisma}: Context = ctx
+
+    const {id} =  parent
+    
+ 
+    const quantity = await prisma.apply_job.count({
+        where:{
+            jobId: Number(id)
+        }
+    })
+
+    return { quantity }
+}
+
+/**
+ * return categories about jobs
+ * @param parent 
+ * @param args 
+ * @param ctx 
+ */
+function categoryType(parent: { id: number}, args: {id: number}, ctx: Context): object {
+    const {id} = parent
+    const {prisma} = ctx
+
+    return prisma.job.findOne({
+        where: {
+            id: Number(id)
+        }
+    }).categories()
+}
+
 
 export const Query = {
     getJob
@@ -49,5 +89,5 @@ export const Query = {
 
 
 export const Job = {
-    publishedBy
+    publishedBy, categoryType, quantityAppliedToJob
 }

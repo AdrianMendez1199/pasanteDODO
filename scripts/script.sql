@@ -78,3 +78,15 @@ CREATE TABLE IF NOT EXISTS apply_job (
  FOREIGN KEY ("userId") REFERENCES users(id),
  FOREIGN KEY ("jobId") REFERENCES job(id) 
 );
+
+
+CREATE TABLE IF NOT EXISTS profile (
+ id SERIAL PRIMARY KEY NOT NULL,
+ institution VARCHAR NOT NULL,
+ position VARCHAR NOT NULL,
+ description VARCHAR,
+ "startDate"  TIMESTAMPTZ NOT NULL,
+ "endDate" TIMESTAMPTZ,
+ "userId" INTEGER NOT NULL,
+ FOREIGN KEY ("userId") REFERENCES users(id)
+);
