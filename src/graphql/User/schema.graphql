@@ -4,6 +4,7 @@ type User {
     lastname: String!
     email: String!
     phone: String!
+    userProfile: [experiencePayload!]!
 }
 
 

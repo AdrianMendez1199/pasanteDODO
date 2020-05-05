@@ -39,6 +39,19 @@ export interface Request {
 }
 
 
+
+export interface Profile {
+    data: Array<Profile>;
+    id:          number;
+    description?: string;
+    endDate?:      Date;
+    institution: string;
+    position:    string;
+    startDate:   Date;
+    userId:      number;
+}
+
+
 /**
  * this function return
  * jwt token

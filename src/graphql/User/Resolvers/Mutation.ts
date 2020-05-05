@@ -1,18 +1,6 @@
 import {Context} from '../../..'
 import bcrypt from 'bcrypt'
-import {User, Login, genereteToken} from '../User'
-
-
-export interface Profile {
-    data: Array<Profile>
-    id:          number;
-    description?: string;
-    endDate?:      Date;
-    institution: string;
-    position:    string;
-    startDate:   Date;
-    userId:      number;
-}
+import {User, Login, genereteToken, Profile} from '../User'
 
 
 /**
@@ -118,7 +106,7 @@ async function uploadProfile (parent: { id: number}, args: Profile, ctx: Context
 
     );
  
-    const profile : Array<object> = await Promise.all(createManyProfile)
+    const profile: Array<object> = await Promise.all(createManyProfile)
     return profile
 
 }
