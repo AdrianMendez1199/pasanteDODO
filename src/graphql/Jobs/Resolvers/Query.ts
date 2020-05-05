@@ -9,7 +9,7 @@ import { Job as JobInterface} from '../Job'
  * @param args 
  * @param ctx 
  */
-function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<JobInterface[]>   {
+function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<object[]>   {
     const {prisma}: Context = ctx
     const {id, orderBy}  = args
 
@@ -41,7 +41,7 @@ async function publishedBy(parent: { id: number}, args: {id: number}, ctx: Conte
         where: {
             id: Number(id)
         }
-    }).users()
+    }).company()
 }
 
 /**

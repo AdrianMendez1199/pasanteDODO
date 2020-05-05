@@ -22,18 +22,29 @@ model categories {
   job         job[]
 }
 
+model company {
+  created_at  DateTime @default(now())
+  description String
+  id          Int      @default(autoincrement()) @id
+  name        String
+  phone       String
+  updated_at  DateTime @default(now())
+  website_url String?
+  job         job[]
+}
+
 model job {
   categoryId      Int
+  companyId       Int
   createdAt       DateTime    @default(now())
   description     String?
   id              Int         @default(autoincrement()) @id
   jobAvailable    available?
   name            String
   numberPositions Int?
-  publishedBy     Int
   updatedAt       DateTime    @default(now())
   categories      categories  @relation(fields: [categoryId], references: [id])
-  users           users       @relation(fields: [publishedBy], references: [id])
+  company         company     @relation(fields: [companyId], references: [id])
   apply_job       apply_job[]
 }
 
@@ -66,12 +77,12 @@ model user_role {
 model users {
   email     String      @unique
   id        Int         @default(autoincrement()) @id
+  is_active Int         @default(1)
   lastname  String
   name      String
   password  String
   phone     String
   apply_job apply_job[]
-  job       job[]
   profile   profile[]
   user_role user_role[]
 }

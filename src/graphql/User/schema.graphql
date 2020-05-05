@@ -71,6 +71,6 @@ input userOrderByInput {
 }
 
 enum orderByArgs {
-    asc,
+    asc
     desc
 }
