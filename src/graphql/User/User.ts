@@ -87,25 +87,24 @@ export function isAuthenticate(request: Request): object | string {
 
 
 export async function createUserAndRole(user: User, context: Context): Promise<User> {
-      let {password, ...rest} = user
-      const {prisma} = context
-      const salt = await bcrypt.genSalt(10)
 
-      password = await bcrypt.hash(password, salt)
+    const {prisma} = context
+    const salt = await bcrypt.genSalt(10)
 
-      const userCreated: User = await prisma.users.create({
-            data: {
-                ...rest,
-                password
-            }
-        })
+    user.password = await bcrypt.hash(user.password, salt)
+
+    const userCreated: User = await prisma.users.create({
+        data: {
+            ...user
+        }
+    })
 
     await prisma.user_role.create({
         data: {
             role:{connect: {id: 1}},
             users:{connect: {id: userCreated.id}}
         }
-     })
+    })
 
-      return userCreated
+    return userCreated
 }
