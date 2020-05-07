@@ -1,6 +1,6 @@
 import {Context} from '../../..'
 import bcrypt from 'bcrypt'
-import {User, Login, genereteToken, Profile} from '../User'
+import {User, Login, genereteToken, Profile, createUserAndRole} from '../User'
 
 
 /**
@@ -12,23 +12,7 @@ import {User, Login, genereteToken, Profile} from '../User'
  */
 async function signup(parent: { id: number}, args: {data: User}, ctx: Context): Promise<User> {
     const {data}: {data: User} = args
-    const {prisma} = ctx
- 
-    const salt = await bcrypt.genSalt(10)
-    data.password = await bcrypt.hash(data.password, salt)
-  
-    const userCreated: User = await prisma.users.create({
-        data
-    })
-
-    await prisma.user_role.create({
-        data: {
-            role:{connect: {id: 1}},
-            users:{connect: {id: userCreated.id}}
-        }
-    })
-
-    return userCreated
+    return await createUserAndRole(data, ctx)
 }
 
 /**

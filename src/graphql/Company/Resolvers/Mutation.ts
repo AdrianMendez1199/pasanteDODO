@@ -1,5 +1,6 @@
 import {Context} from '../../..'
 import { Company } from '../Company'
+import { createUserAndRole, User } from '../../User/User'
 
 /**
   * this function create Job
@@ -7,10 +8,12 @@ import { Company } from '../Company'
   * @param args 
   * @param ctx 
   */
-function createCompany(parent: { id: number}, args: {data: Company}, ctx: Context): object {
-    const {data} = args
+async function createCompany(parent: { id: number}, args: {data: Company, dataUser: User}, ctx: Context): Promise<object> {
+    const {data, dataUser} = args
     const {prisma} = ctx
-   
+
+    await createUserAndRole(dataUser, ctx)
+
     return prisma.company.create({
         data
     })
