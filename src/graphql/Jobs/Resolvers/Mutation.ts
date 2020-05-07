@@ -1,6 +1,5 @@
 import {Context} from '../../..'
 import { Job, ApplyJob} from '../Job'
-import {Company} from '../../Company/Company'
 
 /**
   * this function create Job
@@ -8,7 +7,7 @@ import {Company} from '../../Company/Company'
   * @param args 
   * @param ctx 
   */
-function publishJob(parent: { id: number}, args: {data: Job}, ctx: Context) {
+function publishJob(parent: { id: number}, args: {data: Job}, ctx: Context): object {
     const {prisma} = ctx   
     const {publishedBy, categoryId,  ...rest} = args.data
     return prisma.job.create({
