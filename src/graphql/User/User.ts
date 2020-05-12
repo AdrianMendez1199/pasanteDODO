@@ -59,12 +59,13 @@ export interface Profile {
  * jwt token
  * @param @User 
  */
-export function genereteToken(User: User): string {
+export function genereteToken(User: User, roleId: number): string {
     const {name, lastname, email, phone} = User
-
+    
     const tokenFormed = {
-        name, lastname, email, phone
+        name, lastname, email, phone, roleId
     }
+    console.log(tokenFormed)
     return jwt.sign({tokenFormed}, process.env.SECRET_TOKEN || '1212', {expiresIn: '2 days'})
 }
 
@@ -85,7 +86,12 @@ export function isAuthenticate(request: Request): object | string {
 } 
 
 
-
+/**
+ * create user with your role
+ * @param user 
+ * @param context 
+ * @return @promise<User>
+ */
 export async function createUserAndRole(user: User, context: Context): Promise<User> {
 
     const {prisma} = context

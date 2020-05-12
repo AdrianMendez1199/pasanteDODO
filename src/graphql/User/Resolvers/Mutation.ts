@@ -1,6 +1,6 @@
 import {Context} from '../../..'
 import bcrypt from 'bcrypt'
-import {User, Login, genereteToken, Profile, createUserAndRole} from '../User'
+import {User, Login, genereteToken, Profile, createUserAndRole, Role} from '../User'
 
 
 /**
@@ -49,24 +49,29 @@ async function login(parent: { id: number}, args: Login, ctx: Context): Promise<
     const {data} = args
     const {prisma} = ctx
 
-    const users: User | null = await prisma.users.findOne({
+    const user: User | null = await prisma.users.findOne({
         where: {
             email: data.email 
         }
     })
 
-    if(!users)
+    if(!user)
         throw new Error('incorrect crendentials')
 
-    const isAuth = await bcrypt.compare(data.password, users.password)
+    const validPassword = await bcrypt.compare(data.password, user.password)
 
-    if(!isAuth)
+    const role: any  = await prisma.user_role.findMany({
+        where: {user_id: Number(user.id)}
+    })
+
+
+    if(!validPassword)
         throw new Error('incorrect crendentials')
 
-    const token: string = genereteToken(users)
+    const token: string = genereteToken(user, role[0].role_id)
 
     return {
-        token, data:users
+        token, data:user
     }
 
 }
