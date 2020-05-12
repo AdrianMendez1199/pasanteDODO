@@ -4,7 +4,7 @@ type Company {
  description: String!
 #  email: String!
  phone: String!
- website_url: String!
+ websiteUrl: String!
 }
 
 
@@ -12,7 +12,7 @@ input companyInput {
  name: String!
  description: String!
  phone: String!
- website_url: String!
+ websiteUrl: String!
 }
 
 

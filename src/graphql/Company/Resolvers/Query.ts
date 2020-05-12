@@ -36,10 +36,9 @@ export const Query = {
     const { jobId } = args
 
     const result: User[] = await prisma.raw`SELECT users.* FROM 
-       apply_job INNER JOIN job ON "jobId" = job.id 
-       INNER JOIN users ON users.id = apply_job."userId"
+       applyJob INNER JOIN job ON "jobId" = job.id 
+       INNER JOIN users ON users.id = applyJob."userId"
        WHERE "jobId" = ${Number(jobId)}`
-
 
     return result
   }

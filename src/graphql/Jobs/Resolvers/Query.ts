@@ -53,7 +53,7 @@ export const Job = {
     const { id } = parent
 
 
-    const quantity = await prisma.apply_job
+    const quantity = await prisma.applyJob
       .count({ where: { jobId: Number(id) } })
 
     return { quantity }

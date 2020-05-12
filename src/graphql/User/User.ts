@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { Context } from '../../'
 import bcrypt from 'bcrypt'
+import { OrderByArg } from '../../utils'
+
 
 
 export interface User {
@@ -10,7 +12,17 @@ export interface User {
   email: string;
   phone: string;
   password: string;
-  orderBy?: any;
+  orderBy?: orderByUserInput | null;
+}
+
+
+type orderByUserInput = {
+  id: OrderByArg | null;
+  name: OrderByArg | null;
+  lastname: OrderByArg | null;
+  email: OrderByArg | null;
+  phone: OrderByArg | null;
+  password: OrderByArg | null;
 }
 
 export enum RoleOpt {
@@ -19,15 +31,10 @@ export enum RoleOpt {
 }
 
 
-export enum orderByArgs {
-  asc,
-  desc
-}
-
 export interface Role {
   name: RoleOpt;
-  user_id: number;
-  role_id: number;
+  userId: number;
+  roleId: number;
 }
 
 
@@ -103,7 +110,7 @@ export async function createUserAndRole(user: User, context: Context): Promise<U
   const userCreated: User = await prisma.users
     .create({ data: { ...user } })
 
-  await prisma.user_role.create({
+  await prisma.userRole.create({
     data: {
       role: { connect: { id: 1 } },
       users: { connect: { id: userCreated.id } }

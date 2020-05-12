@@ -46,8 +46,8 @@ export const Mutation = {
 
     const validPassword = await bcrypt.compare(data.password, user.password)
 
-    const role: any = await prisma.user_role
-      .findMany({ where: { user_id: Number(user.id) } })
+    const role = await prisma.userRole
+      .findMany({ where: { userId: Number(user.id) } })
 
 
     if (!validPassword) {
@@ -56,7 +56,7 @@ export const Mutation = {
 
 
     return {
-      token: genereteToken(user, role[0].role_id),
+      token: genereteToken(user, role[0].roleId),
       data: user
     }
 

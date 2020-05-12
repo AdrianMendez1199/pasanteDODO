@@ -27,7 +27,7 @@ export const Mutation = {
     const { userId, jobId } = args
 
 
-    const userApplyToJob: Array<ApplyJob> = await prisma.apply_job.findMany({
+    const userApplyToJob: Array<ApplyJob> = await prisma.applyJob.findMany({
       where: {
         userId: Number(userId),
         jobId: Number(jobId)
@@ -38,7 +38,7 @@ export const Mutation = {
       throw new Error('you previously applied to this proposal')
     }
 
-    return prisma.apply_job.create({
+    return prisma.applyJob.create({
       data: {
         job: { connect: { id: Number(jobId) } },
         users: { connect: { id: Number(userId) } }

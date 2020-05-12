@@ -1,4 +1,3 @@
-
 export interface Company {
     data?: Array<Company>;
     id: number; 
@@ -6,5 +5,5 @@ export interface Company {
     description: string;
     email: string;
     phone: string;
-    website_url: string;
+    websiteUrl: string;
 }

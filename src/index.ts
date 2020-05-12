@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server'
-import { types as typeDefs, resolvers } from './graphql'
+import { typeDefs, resolvers } from './graphql'
 import { PrismaClient } from '@prisma/client'
 import dotenv from 'dotenv'
 import { Request } from './graphql/User/User'
@@ -20,9 +20,6 @@ interface OptionServer {
   debug: boolean;
 }
 
-const context: Context = {
-  prisma
-}
 
 const options: OptionServer = {
   port: Number(process.env.GRAPHQL_SERVER_PORT) || 3005,
@@ -35,7 +32,7 @@ const options: OptionServer = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: (request): object => ({ request, context })
+  context: (request): object => ({ request, prisma })
 });
 
 server.listen({ ...options }).then(({ url }) => {
