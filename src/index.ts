@@ -1,17 +1,15 @@
-import {GraphQLServer, PubSub} from 'graphql-yoga'
+import {ApolloServer} from 'apollo-server'
 import {types as typeDefs, resolvers} from './graphql'
 import { PrismaClient } from '@prisma/client'
 import dotenv from 'dotenv'
 import { Request } from './graphql/User/User'
 
 const prisma = new PrismaClient();
-const pubSub = new PubSub();
 
 dotenv.config()
 
 export interface Context {
     prisma: typeof prisma;
-    pubSub: typeof pubSub;
     request?: typeof Request;
 }
 
@@ -23,8 +21,7 @@ interface OptionServer {
 }
 
 const context: Context = {
-  prisma,
-  pubSub
+  prisma
 }
 
 const options: OptionServer = {
@@ -35,7 +32,7 @@ const options: OptionServer = {
 }
 
 
-const server: GraphQLServer = new GraphQLServer({
+const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: (request): object  => {
@@ -43,8 +40,9 @@ const server: GraphQLServer = new GraphQLServer({
       ...request,
       ...context
     }
-  },
-  // middlewares TODO
+  }
 });
 
-server.start(options) 
+server.listen({ ...options }).then(({ url }) => {
+  console.log(`Server ready at ${url}`);
+});
