@@ -5,78 +5,64 @@ import { User, Login, genereteToken, Profile, createUserAndRole } from '../User'
 
 /**
  * this function create user
- * @param parent 
  * @param args 
  * @param ctx 
  * @returns Promise<User>
  */
-async function signup(parent: { id: number }, args: { data: User }, ctx: Context): Promise<User> {
+async function signup(_: void, args: { data: User }, ctx: Context): Promise<User> {
   const { data }: { data: User } = args
   return await createUserAndRole(data, ctx)
 }
 
 /**
  * this function update user
- * @param parent 
  * @param args 
  * @param ctx 
  */
-function updateUser(parent: { id: number }, args: { data: User; id: number }, ctx: Context): Promise<User> {
+function updateUser(_: void, args: { data: User; id: number }, ctx: Context): object {
   const { data, id }: { data: User; id: number } = args
   const { prisma } = ctx
 
-  const updatedUser = prisma.users.update({
-    where: {
-      id: Number(id)
-    },
-    data
-  })
-
-
-  return updatedUser
+  return prisma.users.update({ where: { id: Number(id) }, data })
 
 }
 
 /**
  * function login
- * @param parent 
  * @param args 
  * @param ctx 
  * @returns Promise<Login>
  */
-async function login(parent: { id: number }, args: Login, ctx: Context): Promise<Login> {
+async function login(_: void, args: Login, ctx: Context): Promise<Login> {
 
   const { data } = args
   const { prisma } = ctx
 
-  const user: User | null = await prisma.users.findOne({
-    where: {
-      email: data.email
-    }
-  })
+  const user: User | null = await prisma.users.findOne({ where: { email: data.email } })
 
-  if (!user)
+  if (!user) {
     throw new Error('incorrect crendentials')
+  }
 
   const validPassword = await bcrypt.compare(data.password, user.password)
 
-  const role: any = await prisma.user_role.findMany({
-    where: { user_id: Number(user.id) }
-  })
+  const role: any = await prisma.user_role
+    .findMany({ where: { user_id: Number(user.id) } })
 
 
-  if (!validPassword)
+  if (!validPassword) {
     throw new Error('incorrect crendentials')
+  }
 
-  const token: string = genereteToken(user, role[0].role_id)
 
   return {
-    token, data: user
+    token: genereteToken(user, role[0].role_id),
+    data: user
   }
 
 }
 
-async function uploadProfile(parent: { id: number }, args: Profile, ctx: Context): Promise<object> {
+async function uploadProfile(_: void, args: Profile, ctx: Context): Promise<object> {
   const { data } = args
   const { prisma } = ctx
 

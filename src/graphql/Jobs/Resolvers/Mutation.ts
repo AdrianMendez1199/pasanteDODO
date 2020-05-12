@@ -7,18 +7,15 @@ import { Job, ApplyJob } from '../Job'
   * @param args 
   * @param ctx 
   */
-function publishJob(parent: { id: number }, args: { data: Job }, ctx: Context): object {
+function publishJob(_: void, args: { data: Job }, ctx: Context): object {
   const { prisma } = ctx
   const { publishedBy, categoryId, ...rest } = args.data
+
   return prisma.job.create({
     data: {
       ...rest,
-      company: {
-        connect: { id: Number(publishedBy) }
-      },
-      categories: {
-        connect: { id: Number(categoryId) }
-      }
+      company: { connect: { id: Number(publishedBy) } },
+      categories: { connect: { id: Number(categoryId) } }
     }
   })
 }
@@ -36,8 +33,9 @@ async function applyToJob(parent: { id: number }, args: { userId: number; jobId:
     }
   })
 
-  if (userApplyToJob.length > 0)
+  if (userApplyToJob.length > 0) {
     throw new Error('you previously applied to this proposal')
+  }
 
   return prisma.apply_job.create({
     data: {

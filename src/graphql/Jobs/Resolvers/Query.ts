@@ -13,16 +13,12 @@ function getJob(parent: { id: number }, args: JobInterface, ctx: Context): Promi
   const { prisma }: Context = ctx
   const { id, orderBy } = args
 
-  if (!id)
-    return prisma.job.findMany({
-      orderBy
-    })
+  if (!id) {
+    return prisma.job.findMany({ orderBy })
+  }
 
-  return prisma.job.findMany({
-    where: {
-      id: Number(id)
-    }
-  })
+  return prisma.job
+    .findMany({ where: { id: Number(id) } })
 
 }
 
@@ -37,11 +33,9 @@ async function publishedBy(parent: { id: number }, args: { id: number }, ctx: Co
   const { prisma }: Context = ctx
   const { id } = parent
 
-  return prisma.job.findOne({
-    where: {
-      id: Number(id)
-    }
-  }).company()
+  return prisma.job
+    .findOne({ where: { id: Number(id) } })
+    .company()
 }
 
 /**
@@ -56,11 +50,8 @@ async function quantityAppliedToJob(parent: { id: number }, args: { jobId: numbe
   const { id } = parent
 
 
-  const quantity = await prisma.apply_job.count({
-    where: {
-      jobId: Number(id)
-    }
-  })
+  const quantity = await prisma.apply_job
+    .count({ where: { jobId: Number(id) } })
 
   return { quantity }
 }
@@ -75,11 +66,9 @@ function categoryType(parent: { id: number }, args: { id: number }, ctx: Context
   const { id } = parent
   const { prisma } = ctx
 
-  return prisma.job.findOne({
-    where: {
-      id: Number(id)
-    }
-  }).categories()
+  return prisma.job
+    .findOne({ where: { id: Number(id) } })
+    .categories()
 }
 
 
