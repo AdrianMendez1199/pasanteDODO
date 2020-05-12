@@ -1,6 +1,6 @@
-import {Context} from '../../..'
+import { Context } from '../../..'
 import bcrypt from 'bcrypt'
-import {User, Login, genereteToken, Profile, createUserAndRole, Role} from '../User'
+import { User, Login, genereteToken, Profile, createUserAndRole } from '../User'
 
 
 /**
@@ -10,8 +10,8 @@ import {User, Login, genereteToken, Profile, createUserAndRole, Role} from '../U
  * @param ctx 
  * @returns Promise<User>
  */
-async function signup(parent: { id: number}, args: {data: User}, ctx: Context): Promise<User> {
-  const {data}: {data: User} = args
+async function signup(parent: { id: number }, args: { data: User }, ctx: Context): Promise<User> {
+  const { data }: { data: User } = args
   return await createUserAndRole(data, ctx)
 }
 
@@ -21,12 +21,12 @@ async function signup(parent: { id: number}, args: {data: User}, ctx: Context): 
  * @param args 
  * @param ctx 
  */
-function updateUser (parent: { id: number}, args: {data: User; id: number}, ctx: Context): Promise<User> {
-  const {data, id}: {data: User; id: number} = args
-  const {prisma} = ctx
+function updateUser(parent: { id: number }, args: { data: User; id: number }, ctx: Context): Promise<User> {
+  const { data, id }: { data: User; id: number } = args
+  const { prisma } = ctx
 
   const updatedUser = prisma.users.update({
-    where:{
+    where: {
       id: Number(id)
     },
     data
@@ -44,57 +44,57 @@ function updateUser (parent: { id: number}, args: {data: User; id: number}, ctx:
  * @param ctx 
  * @returns Promise<Login>
  */
-async function login(parent: { id: number}, args: Login, ctx: Context): Promise<Login> {
+async function login(parent: { id: number }, args: Login, ctx: Context): Promise<Login> {
 
-  const {data} = args
-  const {prisma} = ctx
+  const { data } = args
+  const { prisma } = ctx
 
   const user: User | null = await prisma.users.findOne({
     where: {
-      email: data.email 
+      email: data.email
     }
   })
 
-  if(!user)
+  if (!user)
     throw new Error('incorrect crendentials')
 
   const validPassword = await bcrypt.compare(data.password, user.password)
 
-  const role: any  = await prisma.user_role.findMany({
-    where: {user_id: Number(user.id)}
+  const role: any = await prisma.user_role.findMany({
+    where: { user_id: Number(user.id) }
   })
 
 
-  if(!validPassword)
+  if (!validPassword)
     throw new Error('incorrect crendentials')
 
   const token: string = genereteToken(user, role[0].role_id)
 
   return {
-    token, data:user
+    token, data: user
   }
 
 }
 
-async function uploadProfile (parent: { id: number}, args: Profile, ctx: Context): Promise<object> {
-  const {data} = args
-  const {prisma} = ctx
+async function uploadProfile(parent: { id: number }, args: Profile, ctx: Context): Promise<object> {
+  const { data } = args
+  const { prisma } = ctx
 
 
   const createManyProfile = data.map((profile: Profile) =>
     prisma.profile.create({
       data: {
         institution: profile.institution,
-        position:    profile.position,
-        startDate:   new Date(profile.startDate),
-        users:{
-          connect: {id: Number(profile.userId)}
+        position: profile.position,
+        startDate: new Date(profile.startDate),
+        users: {
+          connect: { id: Number(profile.userId) }
         }
       }
     }),
 
   );
- 
+
   const profile: Array<object> = await Promise.all(createManyProfile)
   return profile
 

@@ -8,7 +8,7 @@ export interface Job {
     description: string | null;
     numberPositions: number | null;
     publishedBy: number;
-    jobAvailable: 'YES' | 'NO' | null ;
+    jobAvailable: 'YES' | 'NO' | null;
     categoryId: number;
     orderBy?: any;
 }
@@ -19,14 +19,14 @@ export enum jobAvailable {
     'NO'
 }
 
-export interface ApplyJob { 
- id: number;
- userId: number;
- jobId: number;
+export interface ApplyJob {
+    id: number;
+    userId: number;
+    jobId: number;
 }
 
 export interface Categories {
- id: number;
- name: string;
- description: string;
+    id: number;
+    name: string;
+    description: string;
 }

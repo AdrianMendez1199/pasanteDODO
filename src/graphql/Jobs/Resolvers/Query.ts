@@ -1,5 +1,5 @@
-import {Context} from '../../..'
-import { Job as JobInterface} from '../Job'
+import { Context } from '../../..'
+import { Job as JobInterface } from '../Job'
 
 
 /**
@@ -9,21 +9,21 @@ import { Job as JobInterface} from '../Job'
  * @param args 
  * @param ctx 
  */
-function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<object[]>   {
-  const {prisma}: Context = ctx
-  const {id, orderBy}  = args
+function getJob(parent: { id: number }, args: JobInterface, ctx: Context): Promise<object[]> {
+  const { prisma }: Context = ctx
+  const { id, orderBy } = args
 
-  if(!id)
+  if (!id)
     return prisma.job.findMany({
       orderBy
     })
-  
+
   return prisma.job.findMany({
     where: {
       id: Number(id)
     }
   })
-    
+
 }
 
 /**
@@ -33,9 +33,9 @@ function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promis
  * @param ctx 
  * @return User
  */
-async function publishedBy(parent: { id: number}, args: {id: number}, ctx: Context): Promise<unknown>  {
-  const {prisma}: Context = ctx
-  const {id} = parent
+async function publishedBy(parent: { id: number }, args: { id: number }, ctx: Context): Promise<unknown> {
+  const { prisma }: Context = ctx
+  const { id } = parent
 
   return prisma.job.findOne({
     where: {
@@ -50,14 +50,14 @@ async function publishedBy(parent: { id: number}, args: {id: number}, ctx: Conte
  * @param args 
  * @param ctx 
  */
-async function quantityAppliedToJob(parent: { id: number}, args: {jobId: number}, ctx: Context): Promise<object> {
-  const {prisma}: Context = ctx
+async function quantityAppliedToJob(parent: { id: number }, args: { jobId: number }, ctx: Context): Promise<object> {
+  const { prisma }: Context = ctx
 
-  const {id} =  parent
-    
- 
+  const { id } = parent
+
+
   const quantity = await prisma.apply_job.count({
-    where:{
+    where: {
       jobId: Number(id)
     }
   })
@@ -71,9 +71,9 @@ async function quantityAppliedToJob(parent: { id: number}, args: {jobId: number}
  * @param args 
  * @param ctx 
  */
-function categoryType(parent: { id: number}, args: {id: number}, ctx: Context): object {
-  const {id} = parent
-  const {prisma} = ctx
+function categoryType(parent: { id: number }, args: { id: number }, ctx: Context): object {
+  const { id } = parent
+  const { prisma } = ctx
 
   return prisma.job.findOne({
     where: {
