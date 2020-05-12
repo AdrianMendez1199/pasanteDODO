@@ -1,0 +1,33 @@
+type Company {
+ id: ID! 
+ name: String!
+ description: String!
+#  email: String!
+ phone: String!
+ websiteUrl: String!
+}
+
+
+input companyInput {
+ name: String!
+ description: String!
+ phone: String!
+ websiteUrl: String!
+}
+
+
+type Query {
+  getCompany(id: ID): [Company!]!
+  userApplyToJob(jobId: ID): [User!]!
+}
+
+type Mutation {
+ createCompany(data: companyInput!, dataUser: signUpInput!): Company!
+}
+
+scalar Date
+
+enum JobAvailable {
+    YES
+    NO
+}

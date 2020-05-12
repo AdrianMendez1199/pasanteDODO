@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model apply_job {
+model applyJob {
   id     Int   @default(autoincrement()) @id
   jobId  Int
   userId Int
@@ -22,19 +22,31 @@ model categories {
   job         job[]
 }
 
+model company {
+  createdAt   DateTime @default(now())
+  description String
+  email       String
+  id          Int      @default(autoincrement()) @id
+  name        String
+  phone       String
+  updatedAt   DateTime @default(now())
+  websiteUrl  String?
+  job         job[]
+}
+
 model job {
   categoryId      Int
-  createdAt       DateTime    @default(now())
+  companyId       Int
+  createdAt       DateTime   @default(now())
   description     String?
-  id              Int         @default(autoincrement()) @id
+  id              Int        @default(autoincrement()) @id
   jobAvailable    available?
   name            String
   numberPositions Int?
-  publishedBy     Int
-  updatedAt       DateTime    @default(now())
-  categories      categories  @relation(fields: [categoryId], references: [id])
-  users           users       @relation(fields: [publishedBy], references: [id])
-  apply_job       apply_job[]
+  updatedAt       DateTime   @default(now())
+  categories      categories @relation(fields: [categoryId], references: [id])
+  company         company    @relation(fields: [companyId], references: [id])
+  applyJob        applyJob[]
 }
 
 model profile {
@@ -50,30 +62,30 @@ model profile {
 
 model role {
   description String
-  id          Int         @default(autoincrement()) @id
+  id          Int        @default(autoincrement()) @id
   name        String
-  user_role   user_role[]
+  userRole    userRole[]
 }
 
-model user_role {
-  id      Int   @default(autoincrement()) @id
-  role_id Int
-  user_id Int
-  role    role  @relation(fields: [role_id], references: [id])
-  users   users @relation(fields: [user_id], references: [id])
+model userRole {
+  id     Int   @default(autoincrement()) @id
+  roleId Int
+  userId Int
+  role   role  @relation(fields: [roleId], references: [id])
+  users  users @relation(fields: [userId], references: [id])
 }
 
 model users {
-  email     String      @unique
-  id        Int         @default(autoincrement()) @id
-  lastname  String
-  name      String
-  password  String
-  phone     String
-  apply_job apply_job[]
-  job       job[]
-  profile   profile[]
-  user_role user_role[]
+  email    String     @unique
+  id       Int        @default(autoincrement()) @id
+  isActive Int        @default(1)
+  lastname String
+  name     String
+  password String
+  phone    String
+  applyJob applyJob[]
+  profile  profile[]
+  userRole userRole[]
 }
 
 enum available {

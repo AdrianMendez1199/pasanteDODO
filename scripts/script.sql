@@ -2,14 +2,15 @@ CREATE DATABASE pasantesdo;
 
 
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY NOT NULL, 
-    name VARCHAR NOT NULL,
-    lastname VARCHAR NOT NULL,
-    email VARCHAR NOT NULL UNIQUE,
-    password VARCHAR NOT NULL
+ id SERIAL PRIMARY KEY NOT NULL, 
+ name VARCHAR NOT NULL,
+ lastname VARCHAR NOT NULL,
+ email VARCHAR NOT NULL UNIQUE,
+ password VARCHAR NOT NULL
 );
 
 ALTER TABLE users ADD COLUMN phone VARCHAR NOT NULL;
+ALTER TABLE users ADD COLUMN  "isActive" INTEGER NOT NULL DEFAULT 1;
 
 
 CREATE TABLE IF NOT EXISTS role (
@@ -18,26 +19,26 @@ CREATE TABLE IF NOT EXISTS role (
  description VARCHAR NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS user_role (
+CREATE TABLE IF NOT EXISTS "userRole" (
  id SERIAL PRIMARY KEY NOT NULL, 
- user_id INTEGER NOT NULL,
- role_id INTEGER NOT NULL,
+ "userId" INTEGER NOT NULL,
+ "roleId" INTEGER NOT NULL,
 
- FOREIGN KEY (user_id) REFERENCES users(id),
- FOREIGN KEY (role_id) REFERENCES role(id)
+ FOREIGN KEY ("userId") REFERENCES users(id),
+ FOREIGN KEY ("roleId") REFERENCES role(id)
 );
 
 
--- CREATE TABLE IF NOT EXISTS company (
---  id SERIAL PRIMARY KEY NOT NULL, 
---  name VARCHAR NOT NULL,
---  description VARCHAR NOT NULL,
---  email VARCHAR NOT NULL,
---  phone VARCHAR NOT NULL,
---  website VARCHAR,
---  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
---  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
--- );
+CREATE TABLE IF NOT EXISTS company (
+ id SERIAL PRIMARY KEY NOT NULL, 
+ name VARCHAR NOT NULL,
+ description VARCHAR NOT NULL,
+ email VARCHAR NOT NULL,
+ phone VARCHAR NOT NULL,
+ "websiteUrl" VARCHAR,
+ "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 
 
 -- ALTER TABLE company ADD COLUMN password VARCHAR NOT NULL;
@@ -49,7 +50,6 @@ CREATE TABLE categories (
  description VARCHAR
 );
 
-
 CREATE TYPE available AS ENUM ('YES', 'NO');
 
 
@@ -58,23 +58,22 @@ CREATE TABLE IF NOT EXISTS job (
  name VARCHAR NOT NULL,
  description VARCHAR,
  "numberPositions" INTEGER,
- "publishedBy" INTEGER NOT NULL,
+ "companyId" INTEGER NOT NULL,
  "categoryId" INTEGER NOT NULL,
  "jobAvailable" available,
  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
  "updatedAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-
- FOREIGN KEY ("publishedBy") REFERENCES users(id),
- FOREIGN KEY ("categoryId") REFERENCES categories(id) 
+--  FOREIGN KEY ("publishedBy") REFERENCES users(id),
+ FOREIGN KEY ("categoryId") REFERENCES categories(id),
+ FOREIGN KEY ("companyId") REFERENCES company(id)
 
 );
 
 
-CREATE TABLE IF NOT EXISTS apply_job (
+CREATE TABLE IF NOT EXISTS "applyJob" (
  id SERIAL PRIMARY KEY NOT NULL,
  "userId" INTEGER NOT NULL,
  "jobId" INTEGER NOT NULL,
-
  FOREIGN KEY ("userId") REFERENCES users(id),
  FOREIGN KEY ("jobId") REFERENCES job(id) 
 );
