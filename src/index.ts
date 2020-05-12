@@ -35,6 +35,4 @@ const server = new ApolloServer({
   context: (request): object => ({ request, prisma })
 });
 
-server.listen({ ...options }).then(({ url }) => {
-  console.log(`Server ready at ${url}`);
-});
+server.listen({ ...options }).then();
