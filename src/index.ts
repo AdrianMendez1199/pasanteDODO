@@ -23,28 +23,28 @@ interface OptionServer {
 }
 
 const context: Context = {
-    prisma,
-    pubSub
+  prisma,
+  pubSub
 }
 
 const options: OptionServer = {
-    port: Number(process.env.GRAPHQL_SERVER_PORT) || 3005,
-    endpoint: process.env.GRAPHQL_END_POINT || '/graphql',
-    playground: process.env.GRAPHQL_PLAYGROUND || '/playground', 
-    debug: true
+  port: Number(process.env.GRAPHQL_SERVER_PORT) || 3005,
+  endpoint: process.env.GRAPHQL_END_POINT || '/graphql',
+  playground: process.env.GRAPHQL_PLAYGROUND || '/playground', 
+  debug: true
 }
 
 
 const server: GraphQLServer = new GraphQLServer({
-    typeDefs,
-    resolvers,
-    context: (request): object  => {
-        return {
-            ...request,
-            ...context
-        }
-    },
-    // middlewares TODO
+  typeDefs,
+  resolvers,
+  context: (request): object  => {
+    return {
+      ...request,
+      ...context
+    }
+  },
+  // middlewares TODO
 });
 
 server.start(options) 

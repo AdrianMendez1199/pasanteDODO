@@ -10,19 +10,19 @@ import { Job as JobInterface} from '../Job'
  * @param ctx 
  */
 function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promise<object[]>   {
-    const {prisma}: Context = ctx
-    const {id, orderBy}  = args
+  const {prisma}: Context = ctx
+  const {id, orderBy}  = args
 
-    if(!id)
-        return prisma.job.findMany({
-            orderBy
-        })
-  
+  if(!id)
     return prisma.job.findMany({
-        where: {
-            id: Number(id)
-        }
+      orderBy
     })
+  
+  return prisma.job.findMany({
+    where: {
+      id: Number(id)
+    }
+  })
     
 }
 
@@ -34,14 +34,14 @@ function getJob(parent: { id: number}, args: JobInterface, ctx: Context): Promis
  * @return User
  */
 async function publishedBy(parent: { id: number}, args: {id: number}, ctx: Context): Promise<unknown>  {
-    const {prisma}: Context = ctx
-    const {id} = parent
+  const {prisma}: Context = ctx
+  const {id} = parent
 
-    return prisma.job.findOne({
-        where: {
-            id: Number(id)
-        }
-    }).company()
+  return prisma.job.findOne({
+    where: {
+      id: Number(id)
+    }
+  }).company()
 }
 
 /**
@@ -51,18 +51,18 @@ async function publishedBy(parent: { id: number}, args: {id: number}, ctx: Conte
  * @param ctx 
  */
 async function quantityAppliedToJob(parent: { id: number}, args: {jobId: number}, ctx: Context): Promise<object> {
-    const {prisma}: Context = ctx
+  const {prisma}: Context = ctx
 
-    const {id} =  parent
+  const {id} =  parent
     
  
-    const quantity = await prisma.apply_job.count({
-        where:{
-            jobId: Number(id)
-        }
-    })
+  const quantity = await prisma.apply_job.count({
+    where:{
+      jobId: Number(id)
+    }
+  })
 
-    return { quantity }
+  return { quantity }
 }
 
 /**
@@ -72,22 +72,22 @@ async function quantityAppliedToJob(parent: { id: number}, args: {jobId: number}
  * @param ctx 
  */
 function categoryType(parent: { id: number}, args: {id: number}, ctx: Context): object {
-    const {id} = parent
-    const {prisma} = ctx
+  const {id} = parent
+  const {prisma} = ctx
 
-    return prisma.job.findOne({
-        where: {
-            id: Number(id)
-        }
-    }).categories()
+  return prisma.job.findOne({
+    where: {
+      id: Number(id)
+    }
+  }).categories()
 }
 
 
 export const Query = {
-    getJob
+  getJob
 }
 
 
 export const Job = {
-    publishedBy, categoryType, quantityAppliedToJob
+  publishedBy, categoryType, quantityAppliedToJob
 }

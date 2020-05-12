@@ -60,13 +60,13 @@ export interface Profile {
  * @param @User 
  */
 export function genereteToken(User: User, roleId: number): string {
-    const {name, lastname, email, phone} = User
+  const {name, lastname, email, phone} = User
     
-    const tokenFormed = {
-        name, lastname, email, phone, roleId
-    }
-    console.log(tokenFormed)
-    return jwt.sign({tokenFormed}, process.env.SECRET_TOKEN || '1212', {expiresIn: '2 days'})
+  const tokenFormed = {
+    name, lastname, email, phone, roleId
+  }
+  console.log(tokenFormed)
+  return jwt.sign({tokenFormed}, process.env.SECRET_TOKEN || '1212', {expiresIn: '2 days'})
 }
 
 /**
@@ -76,13 +76,13 @@ export function genereteToken(User: User, roleId: number): string {
  * @return @Object
  */
 export function isAuthenticate(request: Request): object | string {
-    const header = request.get('authorization')
+  const header = request.get('authorization')
 
-    if(!header)
-        throw new Error('Authentication required')
+  if(!header)
+    throw new Error('Authentication required')
 
-    const token: string = header.replace('Bearer ', '')
-    return jwt.verify(token,  process.env.SECRET_TOKEN || '1212')
+  const token: string = header.replace('Bearer ', '')
+  return jwt.verify(token,  process.env.SECRET_TOKEN || '1212')
 } 
 
 
@@ -94,23 +94,23 @@ export function isAuthenticate(request: Request): object | string {
  */
 export async function createUserAndRole(user: User, context: Context): Promise<User> {
 
-    const {prisma} = context
-    const salt = await bcrypt.genSalt(10)
+  const {prisma} = context
+  const salt = await bcrypt.genSalt(10)
 
-    user.password = await bcrypt.hash(user.password, salt)
+  user.password = await bcrypt.hash(user.password, salt)
 
-    const userCreated: User = await prisma.users.create({
-        data: {
-            ...user
-        }
-    })
+  const userCreated: User = await prisma.users.create({
+    data: {
+      ...user
+    }
+  })
 
-    await prisma.user_role.create({
-        data: {
-            role:{connect: {id: 1}},
-            users:{connect: {id: userCreated.id}}
-        }
-    })
+  await prisma.user_role.create({
+    data: {
+      role:{connect: {id: 1}},
+      users:{connect: {id: userCreated.id}}
+    }
+  })
 
-    return userCreated
+  return userCreated
 }

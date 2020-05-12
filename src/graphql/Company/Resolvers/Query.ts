@@ -9,17 +9,17 @@ import {User} from '../../User/User'
  * @param ctx 
  */
 function getCompany(parent: { id: number}, args: {id: number}, ctx: Context): object {
-    const {prisma}: Context = ctx
-    const {id}  = args
+  const {prisma}: Context = ctx
+  const {id}  = args
 
-    if(!id)
-        return prisma.company.findMany()
+  if(!id)
+    return prisma.company.findMany()
   
-    return prisma.company.findMany({
-        where: {
-            id: Number(id)
-        }
-    })
+  return prisma.company.findMany({
+    where: {
+      id: Number(id)
+    }
+  })
     
 }
 
@@ -31,21 +31,21 @@ function getCompany(parent: { id: number}, args: {id: number}, ctx: Context): ob
  * @return User
  */
 async function userApplyToJob(parent: { id: number}, args: { jobId: number}, ctx: Context): Promise<User[]>  {
-    const {prisma}: Context = ctx
+  const {prisma}: Context = ctx
 
-    const {jobId} = args
+  const {jobId} = args
 
-    const result: User[] = await prisma.raw `SELECT users.* FROM 
+  const result: User[] = await prisma.raw `SELECT users.* FROM 
        apply_job INNER JOIN job ON "jobId" = job.id 
        INNER JOIN users ON users.id = apply_job."userId"
        WHERE "jobId" = ${Number(jobId)}` 
 
 
-    return result
+  return result
 }
 
 export const Query = {
-    getCompany, userApplyToJob
+  getCompany, userApplyToJob
 }
 
 

@@ -9,22 +9,22 @@ import {User as UserInterface, Profile} from '../User'
  * @param ctx 
  */
 function getUser(parent: { id: number}, args: UserInterface, ctx: Context): object {
-    const {orderBy, id}: UserInterface = args
+  const {orderBy, id}: UserInterface = args
 
-    const {prisma}: Context = ctx
+  const {prisma}: Context = ctx
 
-    if(!id)
-        return prisma.users.findMany({
-            orderBy
-        })
+  if(!id)
+    return prisma.users.findMany({
+      orderBy
+    })
 
     
-    return prisma.users.findMany({
-        where:{
-            id: Number(id)
-        }
+  return prisma.users.findMany({
+    where:{
+      id: Number(id)
+    }
         
-    })
+  })
 
 }
 
@@ -35,16 +35,16 @@ function getUser(parent: { id: number}, args: UserInterface, ctx: Context): obje
  * @param ctx 
  */
 function getUserByEmail(parent: { id: number}, args: UserInterface, ctx: Context): object {
-    const { email }: UserInterface =  args
-    const {prisma}: Context = ctx
+  const { email }: UserInterface =  args
+  const {prisma}: Context = ctx
 
-    // isAuthenticate(request)
+  // isAuthenticate(request)
 
-    return prisma.users.findOne({
-        where: {
-            email
-        }
-    })
+  return prisma.users.findOne({
+    where: {
+      email
+    }
+  })
 }
 
 /**
@@ -54,21 +54,21 @@ function getUserByEmail(parent: { id: number}, args: UserInterface, ctx: Context
  * @param ctx 
  */
 function userProfile(parent: { id: number}, args: Profile, ctx: Context): object {
-    const {id} = parent
-    const {prisma} = ctx
+  const {id} = parent
+  const {prisma} = ctx
 
-    return prisma.users.findOne({
-        where:{
-            id: Number(id)
-        }
-    }).profile()
+  return prisma.users.findOne({
+    where:{
+      id: Number(id)
+    }
+  }).profile()
 }
 
 export const Query = {
-    getUser,
-    getUserByEmail
+  getUser,
+  getUserByEmail
 }
 
 export const User = {
-    userProfile
+  userProfile
 }
